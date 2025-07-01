@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+//    output = "../node_modules/.prisma/client"
+//    binaryTargets = ["native", "rhel-openssl-1.0.x"]
+// }
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Estado {
+  EST_ID            String              @id @default(uuid())
+  EST_DSC           Boolean             @unique
+  usuario           Usuario[]
+  perfil            Perfil[]
+  comando           Comando[]
+  arreglo           Arreglo[]
+  arreglo_Adquirido Arreglo_Adquirido[]
+  arreglo_Activo    Arreglo_Activo[]
+  CREATED_AT        DateTime            @default(now())
+  UPDATED_AT        DateTime            @updatedAt
+}
+
+model Usuario {
+  USU_ID            String             @id @default(uuid())
+  USU_USR           String             @unique
+  USU_PSS           String
+  USU_NOM           String
+  USU_APA           String
+  USU_AMA           String
+  USU_TEL           Int
+  PRF_ID            String
+  perfil            Perfil             @relation(fields: [PRF_ID], references: [PRF_ID])
+  ARR_ADQ_ID        String?
+  arreglo_Adquirido Arreglo_Adquirido? @relation(fields: [ARR_ADQ_ID], references: [ARR_ADQ_ID])
+  ARR_ACT_ID        String?
+  arreglo_Activo    Arreglo_Activo?    @relation(fields: [ARR_ACT_ID], references: [ARR_ACT_ID])
+  EST_ID            String
+  estado            Estado             @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT        DateTime           @default(now())
+  UPDATED_AT        DateTime           @updatedAt
+}
+
+model Perfil {
+  PRF_ID     String    @id @default(uuid())
+  PRF_NOM    String    @unique
+  PRF_DSC    String
+  usuarios   Usuario[]
+  EST_ID     String
+  estado     Estado    @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT DateTime  @default(now())
+  UPDATED_AT DateTime  @updatedAt
+}
+
+model Comando {
+  CMD_ID     String   @id @default(uuid())
+  CMD_CODE   Int      @unique
+  CMD_DSC    String
+  ARR_ID     String?
+  arreglo    Arreglo? @relation(fields: [ARR_ID], references: [ARR_ID])
+  EST_ID     String
+  estado     Estado   @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT DateTime @default(now())
+  UPDATED_AT DateTime @updatedAt
+}
+
+model Arreglo {
+  ARR_ID            String             @id @default(uuid())
+  ARR_NOM           String             @unique
+  ARR_DSC           String
+  comando           Comando[]
+  ARR_ADQ_ID        String?
+  arreglo_Adquirido Arreglo_Adquirido? @relation(fields: [ARR_ADQ_ID], references: [ARR_ADQ_ID])
+  ARR_ACT_ID        String?
+  arreglo_Activo    Arreglo_Activo?    @relation(fields: [ARR_ACT_ID], references: [ARR_ACT_ID])
+  EST_ID            String
+  estado            Estado             @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT        DateTime           @default(now())
+  UPDATED_AT        DateTime           @updatedAt
+}
+
+model Arreglo_Adquirido {
+  ARR_ADQ_ID String    @id @default(uuid())
+  usuario    Usuario[]
+  arreglo    Arreglo[]
+  EST_ID     String
+  estado     Estado    @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT DateTime  @default(now())
+  UPDATED_AT DateTime  @updatedAt
+}
+
+model Arreglo_Activo {
+  ARR_ACT_ID String    @id @default(uuid())
+  usuario    Usuario[]
+  arreglo    Arreglo[]
+  EST_ID     String
+  estado     Estado    @relation(fields: [EST_ID], references: [EST_ID])
+  CREATED_AT DateTime  @default(now())
+  UPDATED_AT DateTime  @updatedAt
+}

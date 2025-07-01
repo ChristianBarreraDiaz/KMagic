@@ -1,0 +1,113 @@
+{
+  "name": "keymagic",
+  "version": "1.0.0",
+  "description": "An Electron application with React and TypeScript for executing os keyboard commands",
+  "main": "./out/main/index.js",
+  "author": "cristhofer-pincetti",
+  "homepage": "https://cristhoferpincetti.vercel.app/",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": " electron-vite build && npx prisma generate",
+    "postinstall": "electron-builder install-app-deps",
+    "build:win": "npm run build && electron-builder --win --config",
+    "build:mac": "electron-vite build && electron-builder --mac --config",
+    "build:linux": "electron-vite build && electron-builder --linux --config",
+    "pull:db": "npx prisma db pull"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "2.0.0",
+    "@electron-toolkit/utils": "2.0.0",
+    "@nut-tree/nut-js": "3.1.2",
+    "@prisma/client": "5.7.1",
+    "@types/react-router-dom": "5.3.3",
+    "bcrypt": "5.1.1",
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "electron-store": "8.1.0",
+    "electron-updater": "6.1.1",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.2",
+    "qrcode": "1.5.3",
+    "react-router-dom": "6.21.0",
+    "socket.io-client": "4.7.2",
+    "zustand": "4.4.7"
+  },
+  "devDependencies": {
+    "@electron-toolkit/eslint-config-prettier": "1.0.1",
+    "@electron-toolkit/eslint-config-ts": "1.0.0",
+    "@electron-toolkit/tsconfig": "1.0.1",
+    "@types/express": "4.17.21",
+    "@types/jsonwebtoken": "9.0.5",
+    "@types/node": "18.17.5",
+    "@types/qrcode": "1.5.5",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "4.0.4",
+    "autoprefixer": "10.4.16",
+    "electron": "25.6.0",
+    "electron-builder": "24.6.3",
+    "electron-vite": "1.0.27",
+    "eslint": "8.47.0",
+    "eslint-plugin-react": "7.33.2",
+    "node-key-sender": "1.0.11",
+    "postcss-loader": "7.3.3",
+    "prettier": "3.0.2",
+    "prisma": "5.7.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.6",
+    "typescript": "5.1.6",
+    "vite": "4.4.9"
+  },
+  "build": {
+    "extraResources": [
+      "prisma/**/*",
+      "node_modules/.prisma/**/*",
+      "node_modules/@prisma/client/**/*"
+    ],
+    "win": {
+      "artifactName": "${productName} Installer ${version}.${ext}",
+      "icon": "resources/icon.png"
+    },
+    "nsis": {
+      "artifactName": "${productName} Installer ${version}.${ext}",
+      "shortcutName": "${productName}",
+      "uninstallDisplayName": "${productName}",
+      "createDesktopShortcut": "always",
+      "installerIcon": "resources/favicon.ico"
+    },
+    "mac": {
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": [
+        "NSCameraUsageDescription: Application requests access to the device's camera.",
+        "NSMicrophoneUsageDescription: Application requests access to the device's microphone.",
+        "NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.",
+        "NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder."
+      ],
+      "icon": "resources/icon.png",
+      "notarize": false
+    },
+    "dmg": {
+      "artifactName": "${name}-${version}.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "snap",
+        "deb"
+      ],
+      "maintainer": "cristhofer-pincetti",
+      "category": "Utility",
+      "icon": "resources/icon.png"
+    },
+    "appImage": {
+      "artifactName": "${name}-${version}.${ext}"
+    }
+  }
+}

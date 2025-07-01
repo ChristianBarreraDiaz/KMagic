@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Arreglo" ADD COLUMN     "ARR_DSC" TEXT NOT NULL DEFAULT 'Arreglo',
+ADD COLUMN     "ARR_NOM" TEXT NOT NULL DEFAULT 'Arreglo';

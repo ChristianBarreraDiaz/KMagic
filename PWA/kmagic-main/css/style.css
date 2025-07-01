@@ -1,0 +1,145 @@
+:root {
+  --base-color: #8080ff;
+  --lighter-1: #a0a0ff;
+  --lighter-2: #b8b8ff;
+  --lighter-3: #d1d1ff;
+  --darker-1: #6666cc;
+  --darker-2: #4d4dff;
+  --darker-3: #4040bf;
+}
+
+body {
+  background-color: #8f9eda; /* Ajuste en el color de fondo */
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #8080ff;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+#main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.button {
+  background-color: #4f6cf2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  height: 100px;
+  width: 400px;
+  font-size: 24px; /* Tamaño de fuente aumentado */
+}
+
+.button.back {
+  background-color: #4f6cf2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  height: 70px;
+  width: 150px;
+  font-size: 24px; /* Tamaño de fuente aumentado */
+}
+
+
+.button i {
+  font-size: 32px; /* Tamaño de icono aumentado */
+}
+
+#qr-reader-placeholder {
+  width: 300px;
+  height: 200px;
+  background-color: #8f9eda;
+  margin: 10px 0;
+}
+
+footer {
+  background-color: #4f6cf2; /* Nuevo color para el footer */
+  padding: 10px;
+  text-align: center;
+  margin-top: auto;
+  width: 100%;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.keyboardG {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--base-color);
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.key.double {
+  grid-column-start: 2; /* Iniciar en la segunda columna */
+  grid-column-end: 4; /* Terminar en la cuarta columna */
+}
+
+.key i {
+  font-size: 20px; /* Tamaño fijo para los íconos */
+}
+
+.key.plus-minus {
+  font-size: 20px;
+  position: relative;
+}
+
+.key.plus-minus::before,
+.key.plus-minus::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 18px;
+  background-color: #fff;
+  top: calc(50% - 1.5px);
+}
+
+.key.plus-minus::before {
+  transform: rotate(45deg);
+  left: 2px;
+}
+
+.key.plus-minus::after {
+  transform: rotate(-45deg);
+  right: 2px;
+}
+
+.key:hover {
+  background-color: var(--darker-1);
+}

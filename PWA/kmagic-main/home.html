@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css?v=${Math.random()}">
+  <title>Key Magic App</title> 
+  <script src="https://unpkg.com/socket.io-client@4.5.4/dist/socket.io.min.js"></script>
+  <!--<script src="https://unpkg.com/jsonwebtoken"></script>-->
+  <!--<script src=" https://cdn.jsdelivr.net/npm/jsonwebtoken@9.0.2/index.min.js "></script>-->
+  <script src="js/dataCommand.js?v=${Math.random()}"></script>
+  <!--<script src="js/conectRoom.js?v=${Math.random()}"></script>-->
+</head>
+<body>
+  <header>
+    <h1>Key Magic App</h1>
+    <h3>version 1.0</h3>
+  </header>
+  
+  <div id="main-content">
+    <button class="button" id="numericButton" onclick="handleButtonClick('NUMERIC')">
+      <i class="fas fa-calculator"></i> NUMERIC
+    </button>
+    <button class="button" id="gamerButton" onclick="handleButtonClick('GAMER')">
+      <i class="fas fa-keyboard"></i> GAMER
+    </button>
+  </div>  
+  <footer>
+    <p>&copy; 2023 Derechos Reservados</p>
+  </footer>
+
+  <script>
+    function handleButtonClick(value) {
+      localStorage.setItem('selectedOption', value);
+      if (value === 'NUMERIC') {
+        window.location.href = 'numeric.html';
+      } else if (value === 'GAMER') {
+        window.location.href = 'gamer.html';
+      }
+    }
+    authToken = localStorage.getItem('authToken');
+    const encodedToken = authToken;
+
+  function decodeJwt(token) {
+    const [header, payload, signature] = token.split('.');
+    // Decode the base64-encoded payload
+    const decodedPayload = JSON.parse(atob(payload));
+    // Access the decoded payload
+    console.log(decodedPayload);
+    // Access specific properties
+    const { userId, username, roomId } = decodedPayload;
+    console.log(userId, username, roomId); // Decodifica el token
+    // Connect to the Socket.IO server and join the room
+    const socket = io("https://keymagic-rooms.onrender.com", {
+      auth: {
+        token: token, // Corrección: utilizar la variable 'token' en lugar de 'authToken'
+      },
+    });
+    socket.on("connect", () => {
+      console.log("Connected to the server", roomId);
+      socket.emit("joinRoom", roomId);
+    });
+
+    socket.on("receiveData", (data) => {
+      console.log("Received data from server:", data);
+    });}
+  // Call the decodeJwt function with your encoded token
+  decodeJwt(encodedToken);
+  </script>
+</body>
+</html>

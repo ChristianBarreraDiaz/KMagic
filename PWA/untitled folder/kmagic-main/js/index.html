@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="theme-color" content="#317EFB"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title class="header-title">Soltec Water</title>
+        <meta name="description" content="data collect">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css?v=0">
+        <link rel="manifest" href="manifest.json">
+        <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+    </head>
+    <header>
+      <div class="status-container">
+        <div id="status"></div>
+      </div>
+      <h1>Soltec Water App</h1>
+     <!-- <img src="images/icon-256x256.png">-->
+    </header>
+    <body>
+        <!-- <img src="images/icon-256x256.png"> -->
+        <form>          
+          <label for="username">Nombre de usuario:</label>
+          <input type="text" id="username" name="username" required>
+          <br>
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required>
+          <br>
+          <input type="submit" value="Iniciar sesión">
+        </form>
+        <!--<script src="js/main.js?v=31"></script>-->
+        <div id="message"></div>
+     <!--<script>
+           if ('serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+              navigator.serviceWorker.register('sw.js')
+              .then(registration => {
+                console.log('ServiceWorker registrado correctamente', registration.scope);
+                registration.addEventListener('updatefound', () => {
+                  const newWorker = registration.installing;
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // Hay una nueva versión disponible
+                    const message = `Nueva versión disponible. Por favor, cierra la aplicación y vuelve a abrirla para actualizar.`;
+                    const messageElement = document.getElementById('message');
+                      if (messageElement) {
+                        messageElement.textContent = message;
+                      }
+                    } 
+                  });
+                });
+
+                    navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    window.location.reload();
+                    });
+
+                if (registration.waiting) {
+                registration.waiting.postMessage({ action: 'skipWaiting' });
+                }
+              })
+              .catch(error => {
+                console.log('Error al registrar el ServiceWorker', error);
+              });
+              });
+        }
+          </script>-->
+      </body>
+</html>

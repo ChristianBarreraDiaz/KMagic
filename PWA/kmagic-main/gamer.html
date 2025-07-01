@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/socket.io-client@4.5.4/dist/socket.io.min.js"></script>
+  <script src="https://unpkg.com/jwt-decode@3.1.2/"></script>
+  <script src="js/dataCommand.js?v=Math.random()"></script>
+</head> <!--https://unpkg.com/socket.io-client@4.5.4/dist/socket.io.min.js-->
+<body>
+  <header>
+    <h1>Key Magic App</h1>
+  </header>
+
+  <div class="keyboardG">
+    <div class="key" onclick="handleKeyPress(this)" data-value="Tab">Tab</div>
+    <div class="key" onclick="handleKeyPress(this)" data-value="Q">Q</div>
+    <div class="key" onclick="handleKeyPress(this)" data-value="W">W</div>
+    <div class="key" onclick="handleKeyPress(this)" data-value="E">E</div>
+    <div class="key" onclick="handleKeyPress(this)" data-value="R">R</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="CapsLock">Caps Lock</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="A">A</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="S">S</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="D">D</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="F">F</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="LeftShift">Shift</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="Z">Z</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="X">X</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="C">C</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="V">V</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="LeftControl">Ctrl</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="LeftAlt">Alt</div>
+    <div class="key" onclick="handleKeyPress(this)"data-value="Space">Space</div>
+  </div>
+  <button class="button back" onclick="window.location.href = 'home.html'">
+  <i class="fas fa-arrow-left"></i>
+  Volver
+</button>
+
+  <footer>
+    <p>&copy; 2023 Derechos Reservados</p>
+  </footer>
+ 
+  <script>
+    authToken = localStorage.getItem('authToken');
+    const encodedToken = authToken;
+    
+
+  // Call the decodeJwt function with your encoded token
+  decodeJwt(encodedToken);
+
+
+  function decodeJwt(token) {
+    const [header, payload, signature] = token.split('.');
+    // Decode the base64-encoded payload
+    const decodedPayload = JSON.parse(atob(payload));
+    // Access the decoded payload
+    console.log(decodedPayload);
+    // Access specific properties
+    const { userId, username, roomId } = decodedPayload;
+    localStorage.setItem('roomId', roomId);
+    console.log(userId, username, roomId); // Decodifica el token
+    }
+    let roomId = localStorage.getItem('roomId');
+    // Connect to the Socket.IO server and join the room
+    const socket = io("https://keymagic-rooms.onrender.com", {
+      auth: {
+        token: authToken, // Corrección: utilizar la variable 'token' en lugar de 'authToken'
+      },
+    });
+    socket.on("connect", () => {
+      console.log("Connected to the server", roomId);
+      socket.emit("joinRoom", roomId);
+    });
+
+    socket.on("receiveData", (data) => {
+      console.log("Received data from server:", data);
+    });
+
+function handleKeyPress(key) {
+  var keyPressed = key.dataset.value;
+      var comandosData = JSON.parse(localStorage.getItem('comandosData'));
+      var keys = [];
+      for (var i = 0; i < comandosData.length; i++) {
+        if (keyPressed === comandosData[i].CMD_DSC) {
+          keys.push(comandosData[i].CMD_CODE);
+        }
+      }
+    var data = {
+      keys: keys
+    };
+    socket.emit('sendData', data);
+    console.log('datoEnviado:', data);
+}
+  </script>
+</body>
+</html>

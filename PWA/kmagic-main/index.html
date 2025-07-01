@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#317EFB"/>
+    <title>Key Magic App</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script src="https://unpkg.com/@zxing/browser@latest"></script>
+    <script src="js/main.js?v=${Math.random()}"></script>
+    <link rel="stylesheet" href="css/style.css?v=${Math.random()}">
+</head>
+
+<body>
+    <header>
+        <h1>Key Magic App</h1>
+        <h3>version 1.0</h3>
+    </header>  
+    <button class="button" id="startButton">Ingresar con QR</button>
+    <video id="video" width="300" height="300" style="border: 1px solid gray"></video>
+    <!--<button class="button" id="skipVerificationButton">Omitir verificación</button>-->
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', qrCheck);
+        function qrCheck() {
+            const startButton = document.getElementById('startButton');
+            startButton.addEventListener('click', () => {
+                const codeReader = new ZXing.BrowserQRCodeReader();
+                console.log('ZXing code reader initialized');
+                decodeOnce(codeReader);
+                console.log('Started decoding from the main camera');
+            });
+        }
+        function decodeOnce(codeReader) {
+            codeReader.decodeFromInputVideoDevice(undefined, 'video').then((result) => {
+                // Guardar el resultado en localStorage
+                guardarLocalmente(result.text);
+                // Cerrar el lector después de guardar en localStorage
+                codeReader.stopContinuousDecode();
+                // Puedes ocultar o destruir el elemento del video si es necesario
+                const videoElement = document.getElementById('video');
+                videoElement.srcObject.getTracks().forEach(track => track.stop());
+                videoElement.parentElement.removeChild(videoElement);
+            }).catch((err) => {
+            console.error(err);
+            });
+        }
+        function guardarLocalmente(dataToInsert) {
+            // Guardar en localStorage
+            localStorage.setItem('authToken', dataToInsert);
+            console.log('Código QR guardado en localStorage:', dataToInsert);
+            // Redireccionar a home.html
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+<footer>
+    <p>&copy; 2023 Derechos Reservados</p>
+</footer>
+</html>

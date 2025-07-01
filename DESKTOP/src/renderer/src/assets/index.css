@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background-image-primary: linear-gradient(135deg, rgb(75 47 211) 0%, rgb(53 41 134) 100%);
+
+    --background: 233 100% 96%;
+    --foreground: 250 53% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 250 53% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 250 53% 20%;
+
+    --primary: 231 100% 94%;
+    --primary-foreground: 248 53% 34%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 233 100% 96%;
+    --accent-secundary: 233 100% 96%;
+    --accent-foreground: 248 53% 34%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 233 100% 88%;
+    --input: 233 100% 88%;
+    --ring: 235 100% 81%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 233 100% 96%;
+    --foreground: 248 53% 34%;
+
+    --card: 250 53% 20%;
+    --card-foreground: 248 53% 34%;
+
+    --popover: 250 53% 20%;
+    --popover-foreground: 248 53% 34%;
+
+    --primary: 248 53% 34%;
+    --primary-foreground: 233 100% 96%;
+
+    --secondary: 249 61% 41%;
+    --secondary-foreground: 248 53% 34%;
+
+    --muted: 249 61% 41%;
+    --muted-foreground: 245 93% 67%;
+
+    --accent: 233 100% 96%;
+    --accent-secundary: 233 100% 96%;
+    --accent-foreground: 248 53% 34%;
+
+    --destructive: 240 100% 75%;
+    --destructive-foreground: 248 53% 34%;
+
+    --border: 233 100% 88%;
+    --input: 233 100% 88%;
+    --ring: 235 100% 81%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    color: black;
+    background-color: white;
+    /* font-family: "Roboto Mono", sans-serif; */
+    font-size: 16px;
+    line-height: normal;
+  }
+}
+
+@layer utilities {
+  /* .font-roboto {
+    font-family: "Roboto Mono", sans-serif;
+  } */
+  .w-100svw {
+    width: 100vw;
+    width: 100svw;
+  }
+  .h-100svh {
+    height: 100vh;
+    height: 100svh;
+  }
+  .w-100dvw {
+    width: 100vw;
+    width: 100dvw;
+  }
+  .h-100dvh {
+    height: 100vh;
+    height: 100dvh;
+  }
+  .w-95dvw {
+    width: 95vw;
+    width: 95dvw;
+  }
+  .w-90dvw {
+    width: 90vw;
+    width: 90dvw;
+  }
+  .w-80dvw {
+    width: 80vw;
+    width: 80dvw;
+  }
+  .w-50svw {
+    width: 50vw;
+    width: 50svw;
+  }
+
+  .background-image-primary {
+    background-image: var(--background-image-primary);
+  }
+
+  .shadow-full-sm {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+    box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+  }
+
+  .shadow-full-soft {
+    box-shadow: 20px 0px 25px 2px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 20px 0px 25px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 20px 0px 25px 2px rgba(0, 0, 0, 0.1);
+  }
+}
